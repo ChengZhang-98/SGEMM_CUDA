@@ -11,7 +11,8 @@
 template <const int BLOCKSIZE>
 __global__ void sgemm_shared_mem_block(int M, int N, int K, float alpha,
                                        const float *A, const float *B,
-                                       float beta, float *C) {
+                                       float beta, float *C)
+{
   // the output block that we want to compute in this threadblock
   const uint cRow = blockIdx.x;
   const uint cCol = blockIdx.y;
@@ -31,10 +32,13 @@ __global__ void sgemm_shared_mem_block(int M, int N, int K, float alpha,
   C += cRow * BLOCKSIZE * N + cCol * BLOCKSIZE; // row=cRow, col=cCol
 
   float tmp = 0.0;
-  for (int bkIdx = 0; bkIdx < K; bkIdx += BLOCKSIZE) {
+  // the temporal index to loop over the blocks (moves &A and &B, not refer to GPU blocks!)
+  for (int bkIdx = 0; bkIdx < K; bkIdx += BLOCKSIZE)
+  {
     // Have each thread load one of the elements in A & B
     // Make the threadCol (=threadIdx.x) the consecutive index
     // to allow global memory access coalescing
+    // *: refer to drawio diagram for better understanding of the memory access coalescing
     As[threadRow * BLOCKSIZE + threadCol] = A[threadRow * K + threadCol];
     Bs[threadRow * BLOCKSIZE + threadCol] = B[threadRow * N + threadCol];
 
@@ -43,8 +47,9 @@ __global__ void sgemm_shared_mem_block(int M, int N, int K, float alpha,
     A += BLOCKSIZE;
     B += BLOCKSIZE * N;
 
-    // execute the dotproduct on the currently cached block
-    for (int dotIdx = 0; dotIdx < BLOCKSIZE; ++dotIdx) {
+    // execute the dotproduct on the **currently cached block**
+    for (int dotIdx = 0; dotIdx < BLOCKSIZE; ++dotIdx)
+    {
       tmp += As[threadRow * BLOCKSIZE + dotIdx] *
              Bs[dotIdx * BLOCKSIZE + threadCol];
     }
@@ -52,6 +57,7 @@ __global__ void sgemm_shared_mem_block(int M, int N, int K, float alpha,
     // fetching the next block into the cache before slower threads are done
     __syncthreads();
   }
+  // add the result to the partial sum in C
   C[threadRow * N + threadCol] =
       alpha * tmp + beta * C[threadRow * N + threadCol];
 }
