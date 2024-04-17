@@ -1,6 +1,6 @@
-<mxfile host="Electron" modified="2024-04-15T15:56:58.217Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/24.2.5 Chrome/120.0.6099.109 Electron/28.1.0 Safari/537.36" etag="MHVbmspZg9B6oHTr3ry2" version="24.2.5" type="device" pages="4">
+<mxfile host="Electron" modified="2024-04-16T20:10:20.970Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/24.2.5 Chrome/120.0.6099.109 Electron/28.1.0 Safari/537.36" etag="rK2F4SH3NgTGfFMe_Wc1" version="24.2.5" type="device" pages="6">
   <diagram name="kernel-1-naive" id="-RhTdMe6ygzKIRe5Wn8j">
-    <mxGraphModel dx="1096" dy="1182" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="1" shadow="0">
+    <mxGraphModel dx="894" dy="911" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="1" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -72,7 +72,7 @@
     </mxGraphModel>
   </diagram>
   <diagram id="pBJfIOBmEXkUjtYFFo3t" name="kernel-2-global-mem-coalescing">
-    <mxGraphModel dx="719" dy="819" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+    <mxGraphModel dx="1210" dy="915" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -740,7 +740,7 @@
     </mxGraphModel>
   </diagram>
   <diagram id="Z_-u_tnmp0HD0N9KHCht" name="kernel-3-shared-memory-cache-blocking">
-    <mxGraphModel dx="1226" dy="1398" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
+    <mxGraphModel dx="1210" dy="915" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -1149,7 +1149,7 @@
     </mxGraphModel>
   </diagram>
   <diagram id="1V_KSnV7PmLjDRotiDP5" name="kernel-4-1d-blocking">
-    <mxGraphModel dx="1096" dy="1182" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="1" shadow="0">
+    <mxGraphModel dx="741" dy="763" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="1" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -1567,7 +1567,76 @@
           <mxGeometry x="720" y="400" width="160" height="30" as="geometry" />
         </mxCell>
         <mxCell id="NyXz74AQGbv_j4F7Q6tc-1" value="&lt;font face=&quot;Comic Sans MS&quot;&gt;Note that the param TM in the code is the warp tile.&lt;/font&gt;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
-          <mxGeometry x="40" y="80" width="320" height="30" as="geometry" />
+          <mxGeometry x="40" y="140" width="320" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="6Kv4GSg6lTPqxIAKIkQg-1" value="&lt;font face=&quot;Comic Sans MS&quot;&gt;In Kernel-3 warps stalled waiting for SMEM access.&amp;nbsp;&lt;/font&gt;&lt;div style=&quot;&quot;&gt;&lt;font face=&quot;Comic Sans MS&quot;&gt;Kernel-4 address this problem by having each thread compute more than one output &lt;br&gt;such that more work is performed using registers and relying less on SMEM instructions by&amp;nbsp;&lt;/font&gt;&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontFamily=Architects Daughter;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DArchitects%2BDaughter;" vertex="1" parent="1">
+          <mxGeometry x="40" y="80" width="540" height="60" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="atoJug-fJpmOWw0IcjXY" name="kernel-5-2d-blocking">
+    <mxGraphModel dx="593" dy="610" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="1" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="KBc8Hc0hdNEu1Q9alNaT-1" value="&lt;h1&gt;kernel-5: 2D Blocking&lt;/h1&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontFamily=Martian Mono;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DMartian%2BMono;fontSize=12;fontColor=default;labelBackgroundColor=default;" vertex="1" parent="1">
+          <mxGeometry x="20" y="10" width="380" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="E2t14DMi9wbcmdE1pQQD-5" value="" style="group;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;" vertex="1" connectable="0" parent="1">
+          <mxGeometry x="30" y="150" width="920" height="670" as="geometry" />
+        </mxCell>
+        <mxCell id="E2t14DMi9wbcmdE1pQQD-3" value="$$&#xa;\begin{bmatrix}&#xa;\alpha &amp; \beta \\ &#xa;\gamma &amp; \delta&#xa;\end{bmatrix}&#xa;\times&#xa;\begin{bmatrix}&#xa;a &amp; b\\ &#xa;c &amp; d&#xa;\end{bmatrix}&#xa;=&#xa;\begin{bmatrix}&#xa;\alpha\\ &#xa;\gamma&#xa;\end{bmatrix}&#xa;\otimes&#xa;\begin{bmatrix}&#xa;a\\ &#xa;b&#xa;\end{bmatrix}&#xa;+&#xa;\begin{bmatrix}&#xa;\beta\\ &#xa;\delta\end{bmatrix}&#xa;\otimes&#xa;\begin{bmatrix}&#xa;c\\ &#xa;d&#xa;\end{bmatrix}&#xa;=&#xa;\begin{bmatrix}&#xa;\alpha a &amp; \alpha b  \\ &#xa;\gamma a &amp; \gamma b &#xa;\end{bmatrix}&#xa;+&#xa;\begin{bmatrix}&#xa;\beta c &amp; \beta d \\ &#xa;\delta c &amp; \delta d &#xa;\end{bmatrix}&#xa;=&#xa;\begin{bmatrix}&#xa;\alpha a + \beta c &amp; \alpha b + \beta d \\ &#xa;\gamma a + \delta c &amp; \gamma b + \delta d &#xa;\end{bmatrix}&#xa;$$" style="text;whiteSpace=wrap;fontFamily=Martian Mono;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DMartian%2BMono;fontSize=12;fontColor=default;labelBackgroundColor=default;movable=1;resizable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;" vertex="1" parent="E2t14DMi9wbcmdE1pQQD-5">
+          <mxGeometry width="390" height="670" as="geometry" />
+        </mxCell>
+        <mxCell id="E2t14DMi9wbcmdE1pQQD-4" value="where \(\otimes\) means outer product" style="text;html=1;align=left;verticalAlign=middle;resizable=1;points=[];autosize=1;strokeColor=none;fillColor=none;fontFamily=Comic Sans MS;fontSize=12;fontColor=default;labelBackgroundColor=default;movable=1;rotatable=1;deletable=1;editable=1;locked=0;connectable=1;" vertex="1" parent="E2t14DMi9wbcmdE1pQQD-5">
+          <mxGeometry x="670" y="31" width="250" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="E2t14DMi9wbcmdE1pQQD-6" value="threadId=i" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontFamily=Martian Mono;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DMartian%2BMono;fontSize=12;fontColor=default;labelBackgroundColor=default;" vertex="1" parent="1">
+          <mxGeometry x="350" y="251" width="110" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="E2t14DMi9wbcmdE1pQQD-7" value="i+1" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontFamily=Martian Mono;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DMartian%2BMono;fontSize=12;fontColor=default;labelBackgroundColor=default;" vertex="1" parent="1">
+          <mxGeometry x="465" y="251" width="50" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="E2t14DMi9wbcmdE1pQQD-9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;sketch=1;hachureGap=4;jiggle=1;curveFitting=1;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.455;entryY=0.021;entryDx=0;entryDy=0;entryPerimeter=0;fontFamily=Martian Mono;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DMartian%2BMono;fontSize=12;fontColor=default;labelBackgroundColor=default;disableMultiStroke=1;dashed=1;" edge="1" parent="1" target="E2t14DMi9wbcmdE1pQQD-6">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="400" y="221" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="E2t14DMi9wbcmdE1pQQD-11" value="" style="endArrow=none;html=1;rounded=0;sketch=1;hachureGap=4;jiggle=1;curveFitting=1;fontFamily=Martian Mono;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DMartian%2BMono;fontSize=12;fontColor=default;labelBackgroundColor=default;disableMultiStroke=1;dashed=1;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="430" y="221" as="sourcePoint" />
+            <mxPoint x="370" y="221" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="0eI9qBNZJ1AyFSzrVK6K-2" value="" style="endArrow=none;html=1;rounded=0;sketch=1;hachureGap=4;jiggle=1;curveFitting=1;fontFamily=Martian Mono;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DMartian%2BMono;fontSize=12;fontColor=default;labelBackgroundColor=default;disableMultiStroke=1;dashed=1;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="520" y="221" as="sourcePoint" />
+            <mxPoint x="460" y="221" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="0eI9qBNZJ1AyFSzrVK6K-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;sketch=1;hachureGap=4;jiggle=1;curveFitting=1;orthogonalLoop=1;jettySize=auto;html=1;fontFamily=Martian Mono;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DMartian%2BMono;fontSize=12;fontColor=default;labelBackgroundColor=default;disableMultiStroke=1;dashed=1;" edge="1" parent="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="490" y="221" as="sourcePoint" />
+            <mxPoint x="490" y="251" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="PcdtJF1K-uZm5Le16l6I-1" value="A matrix multiply can be done via accumulating outer product" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontFamily=Martian Mono;fontSource=https%3A%2F%2Ffonts.googleapis.com%2Fcss%3Ffamily%3DMartian%2BMono;fontSize=12;fontColor=default;labelBackgroundColor=default;" vertex="1" parent="1">
+          <mxGeometry x="30" y="70" width="530" height="30" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="Mmnf7gER5dmphXtaftOh" name="summary">
+    <mxGraphModel dx="741" dy="763" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" math="1" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="OVhWPz8xO-mJuN_cnMW_-1" value="&lt;h1&gt;How to sketch a GEMM CUDA kernel in mind?&lt;/h1&gt;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontFamily=Comic Sans MS;fontSize=12;fontColor=default;labelBackgroundColor=default;" vertex="1" parent="1">
+          <mxGeometry x="40" width="560" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="OVhWPz8xO-mJuN_cnMW_-2" value="&lt;ul&gt;&lt;li&gt;What does a single thread (threadId=i) do?&lt;/li&gt;&lt;li&gt;What does next thread (threadId=i+1) in the same warp do?&lt;/li&gt;&lt;ul&gt;&lt;li&gt;Does GMEM -&amp;gt; SMEM allow in-warp broadcast?&lt;br&gt;&lt;/li&gt;&lt;li&gt;Does GMEM -&amp;gt; SMEM allow GMEM coalescing?&lt;/li&gt;&lt;/ul&gt;&lt;li&gt;Compute bound or memory bound?&lt;/li&gt;&lt;li&gt;What is #mem_accesses/result? Can we increase arithmetric density by increasing the #results per thread?&lt;/li&gt;&lt;/ul&gt;" style="text;html=1;align=left;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontFamily=Comic Sans MS;fontSize=12;fontColor=default;labelBackgroundColor=default;" vertex="1" parent="1">
+          <mxGeometry x="40" y="55" width="680" height="120" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>

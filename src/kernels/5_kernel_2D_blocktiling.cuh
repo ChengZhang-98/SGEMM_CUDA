@@ -12,7 +12,8 @@
 template <const int BM, const int BN, const int BK, const int TM, const int TN>
 __global__ void __launch_bounds__((BM * BN) / (TM * TN), 1)
     sgemm2DBlocktiling(int M, int N, int K, float alpha, const float *A,
-                       const float *B, float beta, float *C) {
+                       const float *B, float beta, float *C)
+{
   const uint cRow = blockIdx.y;
   const uint cCol = blockIdx.x;
 
@@ -37,11 +38,11 @@ __global__ void __launch_bounds__((BM * BN) / (TM * TN), 1)
   C += cRow * BM * N + cCol * BN;
 
   // calculating the indices that this thread will load into SMEM
-  const uint innerRowA = threadIdx.x / BK;
+  const uint innerRowA = threadIdx.x / BK; // *: Why threadIdx.x / BK? Recall that in each block, threadIdx.x goes from 0 to BlockDim.x-1
   const uint innerColA = threadIdx.x % BK;
   // calculates the number of rows of As that are being loaded in a single step
   // by a single block
-  const uint strideA = numThreadsBlocktile / BK;
+  const uint strideA = numThreadsBlocktile / BK; // *: Why numThreadsBlocktile / BK? Check the footnote 42 in Siboehm's blog post
   const uint innerRowB = threadIdx.x / BN;
   const uint innerColB = threadIdx.x % BN;
   // for both As and Bs we want each load to span the full column-width, for
@@ -56,13 +57,16 @@ __global__ void __launch_bounds__((BM * BN) / (TM * TN), 1)
   float regN[TN] = {0.0};
 
   // outer-most loop over block tiles
-  for (uint bkIdx = 0; bkIdx < K; bkIdx += BK) {
+  for (uint bkIdx = 0; bkIdx < K; bkIdx += BK)
+  {
     // populate the SMEM caches
-    for (uint loadOffset = 0; loadOffset < BM; loadOffset += strideA) {
+    for (uint loadOffset = 0; loadOffset < BM; loadOffset += strideA)
+    {
       As[(innerRowA + loadOffset) * BK + innerColA] =
           A[(innerRowA + loadOffset) * K + innerColA];
     }
-    for (uint loadOffset = 0; loadOffset < BK; loadOffset += strideB) {
+    for (uint loadOffset = 0; loadOffset < BK; loadOffset += strideB)
+    {
       Bs[(innerRowB + loadOffset) * BN + innerColB] =
           B[(innerRowB + loadOffset) * N + innerColB];
     }
@@ -73,16 +77,21 @@ __global__ void __launch_bounds__((BM * BN) / (TM * TN), 1)
     B += BK * N; // move BK rows down
 
     // calculate per-thread results
-    for (uint dotIdx = 0; dotIdx < BK; ++dotIdx) {
+    for (uint dotIdx = 0; dotIdx < BK; ++dotIdx)
+    {
       // block into registers
-      for (uint i = 0; i < TM; ++i) {
+      for (uint i = 0; i < TM; ++i)
+      {
         regM[i] = As[(threadRow * TM + i) * BK + dotIdx];
       }
-      for (uint i = 0; i < TN; ++i) {
+      for (uint i = 0; i < TN; ++i)
+      {
         regN[i] = Bs[dotIdx * BN + threadCol * TN + i];
       }
-      for (uint resIdxM = 0; resIdxM < TM; ++resIdxM) {
-        for (uint resIdxN = 0; resIdxN < TN; ++resIdxN) {
+      for (uint resIdxM = 0; resIdxM < TM; ++resIdxM)
+      {
+        for (uint resIdxN = 0; resIdxN < TN; ++resIdxN)
+        {
           threadResults[resIdxM * TN + resIdxN] +=
               regM[resIdxM] * regN[resIdxN];
         }
@@ -92,8 +101,10 @@ __global__ void __launch_bounds__((BM * BN) / (TM * TN), 1)
   }
 
   // write out the results
-  for (uint resIdxM = 0; resIdxM < TM; ++resIdxM) {
-    for (uint resIdxN = 0; resIdxN < TN; ++resIdxN) {
+  for (uint resIdxM = 0; resIdxM < TM; ++resIdxM)
+  {
+    for (uint resIdxN = 0; resIdxN < TN; ++resIdxN)
+    {
       C[(threadRow * TM + resIdxM) * N + threadCol * TN + resIdxN] =
           alpha * threadResults[resIdxM * TN + resIdxN] +
           beta * C[(threadRow * TM + resIdxM) * N + threadCol * TN + resIdxN];
